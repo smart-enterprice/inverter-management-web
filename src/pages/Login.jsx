@@ -6,7 +6,6 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add auth logic here
     navigate("/dashboard");
   };
 
@@ -21,7 +20,6 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div className="space-y-4">
-            {/* Email Input */}
             <div>
               <label
                 htmlFor="email"
@@ -36,8 +34,6 @@ export default function Login() {
                 placeholder="Enter your email"
               />
             </div>
-
-            {/* Password Input */}
             <div>
               <label
                 htmlFor="password"
@@ -53,8 +49,6 @@ export default function Login() {
               />
             </div>
           </div>
-
-          {/* Login Button */}
           <div>
             <button
               type="submit"
