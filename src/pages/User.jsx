@@ -390,7 +390,7 @@ const User = () => {
         </div>
         <button 
           onClick={() => setIsModalOpen(true)}
-          className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#9333EA] text-white rounded-xl hover:bg-[#8829DD] transition-colors w-full sm:w-auto"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#9333EA] text-white rounded-lg hover:bg-[#8829DD] transition-colors w-full sm:w-auto text-sm font-medium"
         >
           <FiPlus className="text-lg" />
           Add New User
