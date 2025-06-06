@@ -10,8 +10,10 @@ export default function Layout() {
   // Handle responsive sidebar state
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 768) {
+      if (window.innerWidth < 1024) {
         setIsCollapsed(true);
+      } else {
+        setIsCollapsed(false);
       }
     };
 
@@ -22,8 +24,8 @@ export default function Layout() {
   }, []);
 
   return (
-    <div className="flex bg-gray-50 h-screen overflow-hidden">
-      {/* Overlay for mobile menu */}
+    <div className="flex bg-[#F9FAFB] h-screen overflow-hidden">
+      {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div 
           className="fixed inset-0 bg-black/50 z-20 lg:hidden"
@@ -41,14 +43,19 @@ export default function Layout() {
         />
       </div>
 
-      {/* Main Content */}
-      <div className={`flex flex-col flex-1 transition-all duration-300 ${isCollapsed ? 'lg:ml-16' : 'lg:ml-64'}`}>
+      {/* Main Content Area */}
+      <div className={`flex flex-col flex-1 transition-all duration-300 ${isCollapsed ? 'lg:ml-16' : 'lg:ml-64'} min-h-screen`}>
+        {/* Navbar */}
         <Navbar 
           isMobileMenuOpen={isMobileMenuOpen}
           setIsMobileMenuOpen={setIsMobileMenuOpen}
         />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto">
-          <Outlet />
+        
+        {/* Main Content */}
+        <main className="flex-1 overflow-auto bg-[#F9FAFB]">
+          <div className="p-4">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>

@@ -11,16 +11,16 @@ import {
 } from "react-icons/fi";
 
 const UserTable = ({ users, currentPage, totalPages, onPageChange }) => (
-  <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+  <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
     <div className="overflow-x-auto">
       <table className="w-full">
         <thead>
-          <tr className="bg-gray-50">
-            <th className="text-left p-4 lg:p-6 text-sm font-semibold text-gray-900">Name</th>
-            <th className="text-left p-4 lg:p-6 text-sm font-semibold text-gray-900 hidden sm:table-cell">Email</th>
-            <th className="text-left p-4 lg:p-6 text-sm font-semibold text-gray-900 hidden md:table-cell">Role</th>
-            <th className="text-left p-4 lg:p-6 text-sm font-semibold text-gray-900 hidden lg:table-cell">Created On</th>
-            <th className="text-right p-4 lg:p-6 text-sm font-semibold text-gray-900">Actions</th>
+          <tr className="bg-[#F9FAFB]">
+            <th className="text-left p-4 lg:p-6 text-sm font-medium text-gray-600">Name</th>
+            <th className="text-left p-4 lg:p-6 text-sm font-medium text-gray-600 hidden sm:table-cell">Email</th>
+            <th className="text-left p-4 lg:p-6 text-sm font-medium text-gray-600 hidden md:table-cell">Role</th>
+            <th className="text-left p-4 lg:p-6 text-sm font-medium text-gray-600 hidden lg:table-cell">Created On</th>
+            <th className="text-right p-4 lg:p-6 text-sm font-medium text-gray-600">Actions</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-100">
@@ -83,12 +83,7 @@ const UserTable = ({ users, currentPage, totalPages, onPageChange }) => (
               const isActive = pageNumber === currentPage;
               const isNearCurrent = Math.abs(pageNumber - currentPage) <= 1 || pageNumber === 1 || pageNumber === totalPages;
               
-              // On mobile, show fewer page numbers
-              if (typeof window !== 'undefined' && window.innerWidth < 640) {
-                if (!isActive && pageNumber !== 1 && pageNumber !== totalPages) {
-                  return null;
-                }
-              } else if (!isNearCurrent && pageNumber !== 1 && pageNumber !== totalPages) {
+              if (!isNearCurrent && pageNumber !== 1 && pageNumber !== totalPages) {
                 if (pageNumber === currentPage - 2 || pageNumber === currentPage + 2) {
                   return <span key={idx} className="inline-flex items-center justify-center w-9 h-9 text-gray-400">...</span>;
                 }
@@ -101,7 +96,7 @@ const UserTable = ({ users, currentPage, totalPages, onPageChange }) => (
                   onClick={() => onPageChange(pageNumber)}
                   className={`inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-gray-900 text-white'
+                      ? 'bg-[#9333EA] text-white'
                       : 'border border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50'
                   }`}
                 >
@@ -135,7 +130,7 @@ const FilterTabs = ({ activeTab, onTabChange }) => {
             onClick={() => onTabChange(tab)}
             className={`whitespace-nowrap px-4 py-2 rounded-xl text-sm font-medium transition-all ${
               activeTab === tab
-                ? 'bg-gray-900 text-white shadow-lg'
+                ? 'bg-[#9333EA] text-white'
                 : 'text-gray-500 hover:bg-gray-50'
             }`}
           >
@@ -149,22 +144,16 @@ const FilterTabs = ({ activeTab, onTabChange }) => {
 
 const getRoleColor = (role) => {
   const colors = {
-    "Super Admin":
-      "bg-purple-50 text-purple-700 ring-1 ring-inset ring-purple-600/20",
-    Admin: "bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20",
-    Salesman: "bg-green-50 text-green-700 ring-1 ring-inset ring-green-600/20",
-    Production:
-      "bg-yellow-50 text-yellow-700 ring-1 ring-inset ring-yellow-600/20",
-    Packing:
-      "bg-orange-50 text-orange-700 ring-1 ring-inset ring-orange-600/20",
-    Accounts: "bg-pink-50 text-pink-700 ring-1 ring-inset ring-pink-600/20",
-    Delivery: "bg-cyan-50 text-cyan-700 ring-1 ring-inset ring-cyan-600/20",
-    Dealer: "bg-indigo-50 text-indigo-700 ring-1 ring-inset ring-indigo-600/20",
+    "Super Admin": "bg-[#9333EA]/10 text-[#9333EA]",
+    Admin: "bg-blue-50 text-blue-600",
+    Salesman: "bg-green-50 text-green-600",
+    Production: "bg-yellow-50 text-yellow-600",
+    Packing: "bg-orange-50 text-orange-600",
+    Accounts: "bg-pink-50 text-pink-600",
+    Delivery: "bg-cyan-50 text-cyan-600",
+    Dealer: "bg-indigo-50 text-indigo-600",
   };
-  return (
-    colors[role] ||
-    "bg-gray-50 text-gray-700 ring-1 ring-inset ring-gray-600/20"
-  );
+  return colors[role] || "bg-gray-50 text-gray-600";
 };
 
 const CreateUserModal = ({ isOpen, onClose }) => {
@@ -186,7 +175,6 @@ const CreateUserModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
     console.log('Form submitted:', formData);
     onClose();
   };
@@ -195,17 +183,14 @@ const CreateUserModal = ({ isOpen, onClose }) => {
 
   return (
     <>
-      {/* Modal Backdrop */}
       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" onClick={onClose} />
-      
-      {/* Modal Content */}
       <div className="fixed inset-0 flex items-center justify-center z-50 p-4 sm:p-6">
-        <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg" onClick={e => e.stopPropagation()}>
+        <div className="bg-white rounded-xl shadow-sm w-full max-w-lg" onClick={e => e.stopPropagation()}>
           <div className="flex items-center justify-between p-6 border-b border-gray-100">
             <h2 className="text-xl font-semibold text-gray-900">Add New User</h2>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-50 rounded-lg transition-colors"
             >
               <FiX className="text-gray-500" size={20} />
             </button>
@@ -311,7 +296,7 @@ const CreateUserModal = ({ isOpen, onClose }) => {
               </button>
               <button
                 type="submit"
-                className="px-6 py-2.5 rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors text-sm font-medium"
+                className="px-6 py-2.5 rounded-lg bg-[#9333EA] text-white hover:bg-[#8829DD] transition-colors text-sm font-medium"
               >
                 Create User
               </button>
@@ -397,7 +382,7 @@ const User = () => {
   };
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 h-full flex flex-col">
+    <div className="p-4 sm:p-6 lg:p-8 h-full flex flex-col bg-[#F9FAFB]">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Manage Users</h1>
@@ -405,7 +390,7 @@ const User = () => {
         </div>
         <button 
           onClick={() => setIsModalOpen(true)}
-          className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-colors w-full sm:w-auto"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#9333EA] text-white rounded-lg hover:bg-[#8829DD] transition-colors w-full sm:w-auto text-sm font-medium"
         >
           <FiPlus className="text-lg" />
           Add New User
