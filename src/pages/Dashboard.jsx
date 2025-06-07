@@ -1,5 +1,6 @@
 import React from 'react';
 import { FiUsers, FiPackage, FiShoppingBag, FiTruck, FiTrendingUp, FiBox, FiAlertCircle, FiClock, FiArrowRight } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 const StatCard = ({ icon, title, value }) => (
   <div className="bg-white rounded-xl p-4 transition-transform hover:scale-[1.02] cursor-pointer shadow-sm border border-gray-100">
@@ -76,6 +77,7 @@ const OrderCard = ({ number, dealer, priority, status }) => {
 };
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const orders = [
     { id: 1, number: "1", dealer: "Green Energy Solutions", priority: "High", status: "in-production" },
     { id: 2, number: "2", dealer: "Green Energy Solutions", priority: "Medium", status: "packed" },
@@ -131,7 +133,9 @@ const Dashboard = () => {
                 <p className="text-sm text-gray-500">Track your pending order status</p>
               </div>
             </div>
-            <button className="w-full sm:w-auto px-5 py-2.5 bg-[#9333EA] text-white rounded-xl text-sm font-medium hover:bg-[#8829DD] transition-colors inline-flex items-center justify-center gap-2">
+            <button
+            onClick={() => navigate('/orders')}
+            className="w-full sm:w-auto px-5 py-2.5 bg-[#9333EA] text-white rounded-xl text-sm font-medium hover:bg-[#8829DD] transition-colors inline-flex items-center justify-center gap-2">
               View All Orders
               <FiArrowRight />
             </button>
