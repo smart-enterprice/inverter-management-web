@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { FiPlus, FiSearch, FiBox, FiX, FiEdit2, FiChevronDown, FiCheck } from 'react-icons/fi';
+import { FiPlus, FiSearch, FiBox, FiX } from 'react-icons/fi';
+import CustomSelect from '../components/CustomSelect';
 
 const CreateProductModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -27,6 +28,13 @@ const CreateProductModal = ({ isOpen, onClose }) => {
   };
 
   if (!isOpen) return null;
+
+  const materialOptions = [
+    'Aluminum (AL)',
+    'Copper',
+    'Steel',
+    'Plastic'
+  ];
 
   return (
     <>
@@ -89,18 +97,13 @@ const CreateProductModal = ({ isOpen, onClose }) => {
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Material Type <span className="text-red-500">*</span>
                     </label>
-                    <select
+                    <CustomSelect
                       name="materialType"
                       value={formData.materialType}
                       onChange={handleChange}
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300 text-sm"
-                      required
-                    >
-                      <option value="Aluminum (AL)">Aluminum (AL)</option>
-                      <option value="Copper">Copper</option>
-                      <option value="Steel">Steel</option>
-                      <option value="Plastic">Plastic</option>
-                    </select>
+                      options={materialOptions}
+                      placeholder="Select material type"
+                    />
                   </div>
 
                   <div>
@@ -184,94 +187,6 @@ const CreateProductModal = ({ isOpen, onClose }) => {
         </div>
       </div>
     </>
-  );
-};
-
-const StatusSelect = ({ value, onChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const options = ['All Status', 'Active', 'Inactive'];
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="px-4 py-2.5 rounded-lg border border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300 text-sm bg-white w-[140px] flex items-center justify-between"
-      >
-        <span className="text-gray-900">{value}</span>
-        <FiChevronDown className={`text-gray-500 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
-      </button>
-
-      {isOpen && (
-        <>
-          <div 
-            className="fixed inset-0 z-30" 
-            onClick={() => setIsOpen(false)}
-          />
-          <div className="absolute right-0 mt-2 w-[140px] bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-40">
-            {options.map((option) => (
-              <button
-                key={option}
-                onClick={() => {
-                  onChange(option);
-                  setIsOpen(false);
-                }}
-                className={`w-full text-left px-4 py-2 text-sm flex items-center justify-between hover:bg-[#9333EA]/5 ${
-                  value === option ? 'bg-[#9333EA]/5 text-[#9333EA]' : 'text-gray-700'
-                }`}
-              >
-                <span>{option}</span>
-                {value === option && <FiCheck className="text-[#9333EA]" />}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
-  );
-};
-
-const TypeSelect = ({ value, onChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const options = ['All Types', 'Aluminum', 'Copper', 'Steel', 'Plastic'];
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="px-4 py-2.5 rounded-lg border border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300 text-sm bg-white w-[140px] flex items-center justify-between"
-      >
-        <span className="text-gray-900">{value}</span>
-        <FiChevronDown className={`text-gray-500 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
-      </button>
-
-      {isOpen && (
-        <>
-          <div 
-            className="fixed inset-0 z-30" 
-            onClick={() => setIsOpen(false)}
-          />
-          <div className="absolute right-0 mt-2 w-[140px] bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-40">
-            {options.map((option) => (
-              <button
-                key={option}
-                onClick={() => {
-                  onChange(option);
-                  setIsOpen(false);
-                }}
-                className={`w-full text-left px-4 py-2 text-sm flex items-center justify-between hover:bg-[#9333EA]/5 ${
-                  value === option ? 'bg-[#9333EA]/5 text-[#9333EA]' : 'text-gray-700'
-                }`}
-              >
-                <span>{option}</span>
-                {value === option && <FiCheck className="text-[#9333EA]" />}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
   );
 };
 
@@ -361,13 +276,19 @@ const Products = () => {
               />
             </div>
             <div className="flex items-center gap-3">
-              <TypeSelect 
+              <CustomSelect
+                name="type"
                 value={selectedType}
-                onChange={setSelectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
+                options={['All Types', 'Aluminum', 'Copper', 'Steel', 'Plastic']}
+                placeholder="Select type"
               />
-              <StatusSelect 
+              <CustomSelect
+                name="status"
                 value={selectedStatus}
-                onChange={setSelectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                options={['All Status', 'Active', 'Inactive']}
+                placeholder="Select status"
               />
             </div>
           </div>

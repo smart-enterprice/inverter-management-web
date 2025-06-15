@@ -1,88 +1,8 @@
 import React, { useState } from 'react';
 import { FiPlus, FiSearch, FiBox, FiCalendar, FiChevronDown, FiCheck, FiEye, FiArrowLeft } from 'react-icons/fi';
 import { useNavigate, useLocation } from 'react-router-dom';
+import CustomSelect from '../components/CustomSelect';
 
-const StatusSelect = ({ value, onChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const options = ['All Statuses', 'In Production', 'Packed', 'Billed'];
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="px-4 py-2.5 rounded-lg border border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300 text-sm bg-white w-[140px] flex items-center justify-between"
-      >
-        <span className="text-gray-900">{value}</span>
-        <FiChevronDown className={`text-gray-500 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
-      </button>
-
-      {isOpen && (
-        <>
-          <div className="fixed inset-0 z-30" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 mt-2 w-[140px] bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-40">
-            {options.map((option) => (
-              <button
-                key={option}
-                onClick={() => {
-                  onChange(option);
-                  setIsOpen(false);
-                }}
-                className={`w-full text-left px-4 py-2 text-sm flex items-center justify-between hover:bg-[#9333EA]/5 ${
-                  value === option ? 'bg-[#9333EA]/5 text-[#9333EA]' : 'text-gray-700'
-                }`}
-              >
-                <span>{option}</span>
-                {value === option && <FiCheck className="text-[#9333EA]" />}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
-  );
-};
-
-const PrioritySelect = ({ value, onChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const options = ['All Priorities', 'High', 'Medium', 'Low'];
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="px-4 py-2.5 rounded-lg border border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300 text-sm bg-white w-[140px] flex items-center justify-between"
-      >
-        <span className="text-gray-900">{value}</span>
-        <FiChevronDown className={`text-gray-500 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
-      </button>
-
-      {isOpen && (
-        <>
-          <div className="fixed inset-0 z-30" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 mt-2 w-[140px] bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-40">
-            {options.map((option) => (
-              <button
-                key={option}
-                onClick={() => {
-                  onChange(option);
-                  setIsOpen(false);
-                }}
-                className={`w-full text-left px-4 py-2 text-sm flex items-center justify-between hover:bg-[#9333EA]/5 ${
-                  value === option ? 'bg-[#9333EA]/5 text-[#9333EA]' : 'text-gray-700'
-                }`}
-              >
-                <span>{option}</span>
-                {value === option && <FiCheck className="text-[#9333EA]" />}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
-  );
-};
 
 const CreateOrder = () => {
   const navigate = useNavigate();
@@ -402,13 +322,19 @@ const Orders = () => {
               />
             </div>
             <div className="flex items-center gap-3">
-              <StatusSelect 
+              <CustomSelect
+                name="status"
                 value={selectedStatus}
-                onChange={setSelectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                options={['All Statuses', 'In Production', 'Packed', 'Billed']}
+                placeholder="Select status"
               />
-              <PrioritySelect 
+              <CustomSelect
+                name="priority"
                 value={selectedPriority}
-                onChange={setSelectedPriority}
+                onChange={(e) => setSelectedPriority(e.target.value)}
+                options={['All Priorities', 'High', 'Medium', 'Low']}
+                placeholder="Select priority"
               />
             </div>
           </div>
