@@ -9,6 +9,7 @@ import {
   FiKey,
   FiX,
 } from "react-icons/fi";
+import CustomSelect from '../components/CustomSelect';
 
 const UserTable = ({ users, currentPage, totalPages, onPageChange }) => (
   <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
@@ -181,6 +182,17 @@ const CreateUserModal = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
+  const roleOptions = [
+    'Super Admin',
+    'Admin',
+    'Salesman',
+    'Production',
+    'Packing',
+    'Accounts',
+    'Delivery',
+    'Dealer'
+  ];
+
   return (
     <>
       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" onClick={onClose} />
@@ -250,23 +262,13 @@ const CreateUserModal = ({ isOpen, onClose }) => {
                 <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
                   Role
                 </label>
-                <select
-                  id="role"
+                <CustomSelect
                   name="role"
                   value={formData.role}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300 text-sm"
-                  required
-                >
-                  <option value="Super Admin">Super Admin</option>
-                  <option value="Admin">Admin</option>
-                  <option value="Salesman">Salesman</option>
-                  <option value="Production">Production</option>
-                  <option value="Packing">Packing</option>
-                  <option value="Accounts">Accounts</option>
-                  <option value="Delivery">Delivery</option>
-                  <option value="Dealer">Dealer</option>
-                </select>
+                  options={roleOptions}
+                  placeholder="Select role"
+                />
               </div>
 
               <div>

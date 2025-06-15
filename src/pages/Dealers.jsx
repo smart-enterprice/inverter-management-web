@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FiPlus, FiSearch, FiMoreHorizontal, FiX, FiCheck, FiChevronDown, FiEdit2, FiTrash2, FiEye } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import CustomSelect from '../components/CustomSelect';
 
 const CreateDealerModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -86,50 +87,6 @@ const CreateDealerModal = ({ isOpen, onClose }) => {
         </div>
       </div>
     </>
-  );
-};
-
-const StatusSelect = ({ value, onChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const options = ['All Statuses', 'Active', 'Inactive'];
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="px-4 py-2.5 rounded-lg border border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300 text-sm bg-white w-[140px] flex items-center justify-between"
-      >
-        <span className="text-gray-900">{value}</span>
-        <FiChevronDown className={`text-gray-500 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
-      </button>
-
-      {isOpen && (
-        <>
-          <div 
-            className="fixed inset-0 z-30" 
-            onClick={() => setIsOpen(false)}
-          />
-          <div className="absolute right-0 mt-2 w-[140px] bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-40">
-            {options.map((option) => (
-              <button
-                key={option}
-                onClick={() => {
-                  onChange(option);
-                  setIsOpen(false);
-                }}
-                className={`w-full text-left px-4 py-2 text-sm flex items-center justify-between hover:bg-[#9333EA]/5 ${
-                  value === option ? 'bg-[#9333EA]/5 text-[#9333EA]' : 'text-gray-700'
-                }`}
-              >
-                <span>{option}</span>
-                {value === option && <FiCheck className="text-[#9333EA]" />}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
   );
 };
 
@@ -265,10 +222,15 @@ const Dealers = () => {
                 className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 focus:border-gray-300 focus:ring-1 focus:ring-gray-300 text-sm"
               />
             </div>
-            <StatusSelect 
-              value={selectedStatus}
-              onChange={setSelectedStatus}
-            />
+            <div className="flex items-center gap-3">
+              <CustomSelect
+                name="status"
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                options={['All Statuses', 'Active', 'Inactive']}
+                placeholder="Select status"
+              />
+            </div>
           </div>
 
           <div className="mt-6 overflow-x-auto">

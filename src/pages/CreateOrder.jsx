@@ -1,48 +1,7 @@
 import React, { useState } from 'react';
-import { FiPlus, FiArrowLeft, FiPackage, FiChevronDown, FiSend } from 'react-icons/fi';
+import { FiPlus, FiArrowLeft, FiTrash2, FiPackage, FiChevronDown, FiSend } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
-
-const CustomSelect = ({ value, onChange, options, placeholder, name }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-left text-sm flex items-center justify-between hover:border-[#9333EA] focus:outline-none focus:ring-2 focus:ring-[#9333EA]/20 transition-all"
-      >
-        <span className={value ? "text-gray-900" : "text-gray-500"}>{value || placeholder}</span>
-        <FiChevronDown className={`text-gray-400 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
-      </button>
-
-      {isOpen && (
-        <>
-          <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
-          <div className="absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg py-1 animate-fadeIn">
-            {options.map((option) => (
-              <button
-                key={option}
-                type="button"
-                onClick={() => {
-                  onChange({ target: { name, value: option } });
-                  setIsOpen(false);
-                }}
-                className={`w-full px-4 py-2 text-sm text-left transition-colors ${
-                  value === option 
-                    ? 'bg-[#9333EA]/10 text-[#9333EA]' 
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
-  );
-};
+import CustomSelect from '../components/CustomSelect';
 
 const CreateOrder = () => {
   const navigate = useNavigate();
@@ -94,6 +53,7 @@ const CreateOrder = () => {
 
   const dealerOptions = ['Green Energy Solutions', 'Power Tech Distributors'];
   const priorityOptions = ['High', 'Medium', 'Low'];
+  const productOptions = ['SI-1KW PowerMax X100', 'SI-2KW PowerMax X200', 'BI-500W Voltron A50'];
 
   return (
     <div className="min-h-screen bg-gray-50/50">
@@ -143,6 +103,7 @@ const CreateOrder = () => {
                       onChange={handleChange}
                       options={dealerOptions}
                       placeholder="Select a dealer"
+                      searchable={true}
                     />
                   </div>
 
@@ -205,8 +166,9 @@ const CreateOrder = () => {
                       <CustomSelect
                         value={item.product}
                         onChange={(e) => handleItemChange(index, 'product', e.target.value)}
-                        options={['SI-1KW PowerMax X100', 'SI-2KW PowerMax X200', 'BI-500W Voltron A50']}
+                        options={productOptions}
                         placeholder="Select product"
+                        searchable={true}
                       />
                     </div>
 
@@ -235,9 +197,7 @@ const CreateOrder = () => {
                       onClick={() => removeItem(index)}
                       className="text-red-500 hover:text-red-600 transition-colors"
                     >
-                      <svg className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-                      </svg>
+                       <FiTrash2 className="w-5 h-5" />
                     </button>
                   </div>
                 ))}
